@@ -111,6 +111,35 @@ export class SamlConfig {
   public readonly lastnamePropertyName: string = 'sn';
 }
 
+export class OidcConfig {
+  @IsUrl()
+  public readonly issuer: string;
+
+  @IsUrl()
+  public readonly authorizationURL: string;
+
+  @IsUrl()
+  public readonly tokenURL: string;
+
+  @IsUrl()
+  public readonly userInfoURL: string;
+
+  @IsString()
+  public readonly clientID: string;
+
+  @IsString()
+  public readonly clientSecret: string;
+
+  @IsUrl()
+  public readonly callbackURL: string;
+
+  @IsString()
+  public readonly scope: string = 'openid profile email';
+
+  @IsString()
+  public readonly redirectFrontendUrl: string;
+}
+
 export class AuthConfig {
   @IsString()
   public readonly secret: string;
@@ -136,6 +165,11 @@ export class Config {
   @IsOptional()
   @ValidateNested()
   public readonly samlOption: SamlConfig;
+
+  @Type(() => OidcConfig)
+  @IsOptional()
+  @ValidateNested()
+  public readonly oidc: OidcConfig;
 
   @Type(() => AuthConfig)
   @ValidateNested()
